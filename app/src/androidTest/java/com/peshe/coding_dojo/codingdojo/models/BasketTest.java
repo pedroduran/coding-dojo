@@ -24,6 +24,10 @@ public class BasketTest extends InstrumentationTestCase {
         return bookNumber * BOOK_PRICE * (1 - discount);
     }
 
+    public static double getPrice(int bookNumber, int collectionNumber) {
+        return getPrice(bookNumber) * collectionNumber;
+    }
+
     public void test1BookIs8Eur() throws Exception {
         assertEquals(getPrice(1), BOOK_PRICE);
     }
@@ -45,6 +49,6 @@ public class BasketTest extends InstrumentationTestCase {
     public void test5Collections() throws Exception {
         int numberOfBooks = 7;
         double totalPriceWithDiscount = ((7 * BOOK_PRICE) * 0.55) * 5;
-        assertEquals(5 * getPrice(numberOfBooks), totalPriceWithDiscount);
+        assertEquals(getPrice(numberOfBooks, 5), totalPriceWithDiscount);
     }
 }
