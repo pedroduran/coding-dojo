@@ -7,25 +7,38 @@ import android.test.InstrumentationTestCase;
  */
 public class BasketTest extends InstrumentationTestCase {
 
+    public static final double BOOK_PRICE = 8;
+
     public static double getPrice(int bookNumber) {
+        double discount = 0;
         switch (bookNumber) {
-            case 1:
-                return 8;
             case 2:
-                return 2 * 8 * 0.95;
+                discount = 0.05;
+                break;
+            case 7:
+                discount = 0.45;
+                break;
+            default:
+                break;
         }
-        return 0;
+        return bookNumber * BOOK_PRICE * (1 - discount);
     }
 
     public void test1BookIs8Eur() throws Exception {
-        assertEquals(getPrice(1), 8.0);
+        assertEquals(getPrice(1), BOOK_PRICE);
     }
 
     public void test1BookType1and1BookType2HasDiscount() throws Exception {
-        double precioType1 = 8;
-        double precioType2 = 8;
+        double precioType1 = BOOK_PRICE;
+        double precioType2 = BOOK_PRICE;
         double precioTotalWithDiscount = (precioType1 + precioType2) * 0.95;
 
         assertEquals(getPrice(2), precioTotalWithDiscount);
+    }
+
+    public void testAllCollectionHas45PercentDiscount(){
+        int numberOfBooks = 7;
+        double totalPriceWithDiscount = (7 * BOOK_PRICE) * 0.55;
+        assertEquals(getPrice(7), totalPriceWithDiscount);
     }
 }
